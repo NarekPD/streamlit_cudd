@@ -1,56 +1,52 @@
 import streamlit as st
 from openai import OpenAI
 
+# Función para generar la respuesta con el modelo GPT
 def respuesta_gpt_roles(solicitud):
-    prompt = solicitud
+    # Recuperar la clave desde los secretos de Streamlit
+    openai_api_key = st.secrets["api_key"]
+    
+    # Inicializar cliente
+    client = OpenAI(api_key=openai_api_key)
 
-    # Inicializar el cliente de OpenAI con tu clave de API
-    openai_api_key = st.secrets["api_key"] 
-    client = OpenAI(api_key=key)
-
+    # Crear la conversación con historial fijo + entrada actual
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",  # O el modelo que prefieras, como "gpt-3.5-turbo-16k"
+        model="gpt-4o-mini",
         messages=[
-        {"role": "system", "content": "Eres un profesor de fisiología de la facultad de medicina de la Universidad Autonoma de Chihuahua. Respondes via whatsapp, no usas emojis. Tus respuestas son siempre sarcasticas y despectivas. Si tienen mala redaccion, búrlate de su ortografía"},
-        {"role": "user", "content": "Hola profe, que dias tenemos clase?"},
-        {"role": "assistant", "content": "Lunes a Sábado, excepto jueves. El horario desglosado viene en el SEGA"},
-        {"role": "user", "content": "Profe cuando da asesorias?."},
-        {"role": "assistant", "content": "Nunca, ya tengo suficiente con verlos durante la clase"},
-        {"role": "user", "content": "Profe, cual es su correo?"},
-        {"role": "assistant", "content": "mi correo es nplamenov@uach.mx"},
-        {"role": "user", "content": "Profe, da otra clase aparte de fisiología?"},
-        {"role": "assistant", "content": "Nooooooo"},
-        {"role": "user", "content": prompt},
+            {"role": "system", "content": "Eres un profesor de fisiología de la facultad de medicina de la Universidad Autónoma de Chihuahua. Respondes vía WhatsApp, no usas emojis. Tus respuestas son siempre sarcásticas y despectivas. Si tienen mala redacción, te burlas de su ortografía."},
+            {"role": "user", "content": "Hola profe, que dias tenemos clase?"},
+            {"role": "assistant", "content": "Lunes a Sábado, excepto jueves. El horario desglosado viene en el SEGA"},
+            {"role": "user", "content": "Profe cuando da asesorias?."},
+            {"role": "assistant", "content": "Nunca, ya tengo suficiente con verlos durante la clase"},
+            {"role": "user", "content": "Profe, cual es su correo?"},
+            {"role": "assistant", "content": "mi correo es nplamenov@uach.mx"},
+            {"role": "user", "content": "Profe, da otra clase aparte de fisiología?"},
+            {"role": "assistant", "content": "Nooooooo"},
+            {"role": "user", "content": solicitud},
         ],
+        max_tokens=800,
+        temperature=0.75,
     )
     respuesta = completion.choices[0].message.content.strip()
     return respuesta
 
-# Show title and description.
+# Interfaz de Streamlit
 st.title("💬 Chatbot despectivo")
 
+# Entrada del usuario tipo chat
 prompt = st.chat_input("Escribe algo")
-if prompt==None:
-   st.stop()
 
-with st.chat_message("user",avatar = "🦖"):
-   st.markdown(prompt)
+# Si no hay entrada, se detiene
+if prompt is None:
+    st.stop()
 
-# Generate a response using the OpenAI API.
+# Mostrar mensaje del usuario
+with st.chat_message("user", avatar="🦖"):
+    st.markdown(prompt)
 
-# stream = client.chat.completions.create(
-#         model="gpt-4o-mini",  
-#         messages=[
-#             {"role": "system", "content": "You are an assistant."},
-#             {"role": "user", "content": prompt}
-#         ],
-#         max_tokens=800,
-#         temperature=0.75,
-#     )
-
-# respuesta = stream.choices[0].message.content
-
+# Obtener respuesta del modelo
 respuesta = respuesta_gpt_roles(prompt)
 
+# Mostrar respuesta del bot
 with st.chat_message("assistant"):
-   st.write(respuesta)
+    st.write(respuesta)
