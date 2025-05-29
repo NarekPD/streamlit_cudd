@@ -3,7 +3,7 @@ from openai import OpenAI
 import random
 
 # Lista de emojis tipo "hater"
-assistant_emojis = ["🙄", "😒", "🧔‍♂️💢"]
+assistant_emojis = ["🙄", "😒", "😑", "😠"]
 
 def respuesta_gpt_roles(solicitud):
     openai_api_key = st.secrets["api_key"]
