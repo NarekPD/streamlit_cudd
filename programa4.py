@@ -28,4 +28,5 @@ stream = client.chat.completions.create(
    )
 respuesta = stream.choices[0].message.content
 
-/
+with st.chat_message("assistant"):
+  st.write(respuesta)
