@@ -6,8 +6,8 @@ st.title("🧮 Calculadora de IMC")
 
 st.write("Introduce tus datos para calcular tu Índice de Masa Corporal (IMC):")
 
-# Entradas del usuario
-peso = st.number_input("Peso (kg):", min_value=0.0, step=0.1, value=70)
+# Entradas del usuario con valores por defecto
+peso = st.number_input("Peso (kg):", min_value=0.0, step=0.1, value=70.0)
 estatura = st.number_input("Estatura (m):", min_value=0.0, step=0.01, value=1.70)
 
 # Cálculo del IMC
