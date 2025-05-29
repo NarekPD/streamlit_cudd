@@ -26,5 +26,5 @@ if peso > 0 and estatura > 0:
         categoria = "Obesidad"
 
     st.info(f"📊 Clasificación: **{categoria}**")
- else:
+else:
     st.warning("Pedazo de animal, lograste confundir a una inteligencia artificial con tu 'inteligencia' personal")
