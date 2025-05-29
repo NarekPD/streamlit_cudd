@@ -15,17 +15,17 @@ if prompt==None:
 with st.chat_message("user", avatar = "🦖"):
    st.markdown(prompt)
 
-# # Generate a response using the OpenAI API.
+# Generate a response using the OpenAI API.
 
-# stream = client.chat.completions.create(
-#        model="gpt-4o-mini",  
-#        messages=[
-#            {"role": "system", "content": "You are an assistant."},
-#            {"role": "user", "content": prompt}
-#        ],
-#        max_tokens=800,
-#        temperature=0,
-#    )
-# respuesta = stream.choices[0].message.content
+stream = client.chat.completions.create(
+       model="gpt-4o-mini",  
+       messages=[
+           {"role": "system", "content": "You are an assistant."},
+           {"role": "user", "content": prompt}
+       ],
+       max_tokens=800,
+       temperature=0,
+   )
+respuesta = stream.choices[0].message.content
 
-# /
+/
