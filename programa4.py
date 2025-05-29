@@ -12,12 +12,12 @@ prompt = st.chat_input("ola ke ace?")
 if prompt==None:
    st.stop()
 
-#with st.chat_message("user"):
-#   st.markdown(prompt)
+with st.chat_message("user", avatar = "🦖"):
+   st.markdown(prompt)
 
-# Generate a response using the OpenAI API.
+# # Generate a response using the OpenAI API.
 
-#stream = client.chat.completions.create(
+# stream = client.chat.completions.create(
 #        model="gpt-4o-mini",  
 #        messages=[
 #            {"role": "system", "content": "You are an assistant."},
@@ -26,7 +26,6 @@ if prompt==None:
 #        max_tokens=800,
 #        temperature=0,
 #    )
-#respuesta = stream.choices[0].message.content
+# respuesta = stream.choices[0].message.content
 
-#with st.chat_message("assistant"):
-#   st.write(respuesta)
+# /
