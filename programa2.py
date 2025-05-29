@@ -27,4 +27,4 @@ if peso > 0 and estatura > 0:
 
     st.info(f"📊 Clasificación: **{categoria}**")
 else:
-    st.warning("Pedazo de animal, lograste confundir a una inteligencia artificial con tu 'inteligencia' personal")
+    st.warning("Pedazo de animal, lograste confundir a una inteligencia artificial con tus babosadas. Sácate el crayon de la nariz y mete valores coherentes en los respectivos campos")
