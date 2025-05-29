@@ -1,15 +1,14 @@
 import streamlit as st
 from openai import OpenAI
+import random
 
-# Función para generar la respuesta con el modelo GPT
+# Lista de emojis tipo "hater"
+assistant_emojis = ["🙄", "😒", "🧔‍♂️💢"]
+
 def respuesta_gpt_roles(solicitud):
-    # Recuperar la clave desde los secretos de Streamlit
     openai_api_key = st.secrets["api_key"]
-    
-    # Inicializar cliente
     client = OpenAI(api_key=openai_api_key)
 
-    # Crear la conversación con historial fijo + entrada actual
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -25,28 +24,26 @@ def respuesta_gpt_roles(solicitud):
             {"role": "user", "content": solicitud},
         ],
         max_tokens=800,
-        temperature=0.75,
+        temperature=0.8,
     )
     respuesta = completion.choices[0].message.content.strip()
     return respuesta
 
-# Interfaz de Streamlit
+# Interfaz
 st.title("💬 Chatbot despectivo")
 
-# Entrada del usuario tipo chat
 prompt = st.chat_input("Escribe algo")
 
-# Si no hay entrada, se detiene
 if prompt is None:
     st.stop()
 
-# Mostrar mensaje del usuario
-with st.chat_message("user", avatar="🦖"):
+with st.chat_message("user", avatar="💩"):
     st.markdown(prompt)
 
-# Obtener respuesta del modelo
 respuesta = respuesta_gpt_roles(prompt)
 
-# Mostrar respuesta del bot
-with st.chat_message("assistant"):
+# Selección aleatoria del avatar del asistente
+assistant_avatar = random.choice(assistant_emojis)
+
+with st.chat_message("assistant", avatar=assistant_avatar):
     st.write(respuesta)
