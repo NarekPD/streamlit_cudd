@@ -19,12 +19,13 @@ def respuesta_gpt_roles(solicitud):
         {"role": "user", "content": prompt},
         ],
         max_tokens=800,
-        temperature=0.7
+        temperature=0.75
     )
     respuesta = completion.choices[0].message.content.strip()
     return respuesta
 
 import streamlit as st
+from openai import OpenAI
 
 # Función que genera la respuesta del chatbot
 def respuesta_gpt_roles(prompt):
