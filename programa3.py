@@ -50,7 +50,7 @@ with st.chat_message("user",avatar = "🦖"):
 
 # respuesta = stream.choices[0].message.content
 
-respuesta = respuesta_gpt_roles(solicitud)
+respuesta = respuesta_gpt_roles(prompt)
 
 with st.chat_message("assistant"):
    st.write(respuesta)
