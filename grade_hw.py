@@ -1,0 +1,78 @@
+import streamlit as st
+from openai import OpenAI
+
+# https://github.com/GracielaRamirezA/Streamlit/blob/main/DataPartition.py
+# Título y sidebar
+st.sidebar.title("🔍 Evaluación de Preprocesamiento de Datos")
+
+st.sidebar.write("Facultad de Ingeniería")
+st.sidebar.image("data:image/png;base64,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")
+
+
+# Inicializar cliente OpenAI
+openai_api_key = st.secrets["api_key"]
+client = OpenAI(api_key=openai_api_key)
+
+# Instrucción y advertencia
+st.markdown("""
+Pega el fragmento de código donde realizas el preprocesamiento.
+""")
+
+# Input de código
+student_code = st.text_area("📋 Pega aquí tu código")
+
+# Selección de aspecto a revisar
+aspect_to_review = st.sidebar.selectbox(
+    "Selecciona el aspecto a revisar:",
+    [
+        "Uso de .fit() en test",
+        "División Train-Test"
+    ]
+)
+
+# Construir el prompt según la opción
+if aspect_to_review == "Uso de .fit() en test":
+    prompt = f"""
+Actúa como un experto en Machine Learning. Evalúa si el siguiente código aplica correctamente los escaladores y no utiliza `.fit()` en el conjunto de prueba. Indica si hay errores y sugiere una corrección.
+
+Código:
+{student_code}
+
+Responde de forma clara y breve:
+- ¿El código aplica correctamente los escaladores?
+- ¿Se está usando `.fit()` en el test?
+- ¿Qué recomendación harías?
+"""
+elif aspect_to_review == "División Train-Test":
+    prompt = f"""
+Actúa como un experto en Machine Learning. Evalúa si el siguiente código realiza correctamente la división del dataset en entrenamiento y prueba antes de cualquier transformación. Indica si hay errores y sugiere una corrección.
+
+Código:
+{student_code}
+
+Responde de forma clara y breve:
+- ¿El código divide correctamente el dataset?
+- ¿Se hace la división antes de preprocesar?
+- ¿Qué recomendación harías?
+"""
+
+# Botón de evaluación
+if st.button("🧠 Evaluar código"):
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": "Eres un profesor de Machine Learning revisando código de estudiantes."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=400,
+        temperature=0,
+    )
+
+    result = response.choices[0].message.content
+    st.markdown("### 📄 Resultado:")
+    st.write(result)
+
+    # Lanzar globos si el código fue correcto
+    if "código es correcto" in result.lower() or "no se encontró error" in result.lower():
+        st.success("¡Muy bien hecho! 🎉")
+        st.balloons()
