@@ -1,5 +1,3 @@
-# https://github.com/sagonzalezuach/clases_bioquimica_chatbot/blob/main/app/chatbot_aminoacidos_gpt4.py
-
 import streamlit as st
 import os
 from openai import OpenAI
